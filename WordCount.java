@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class WordCount{
     public static void main(String[] args){
         String filename = getfile();
+        readfile(filename);
         addwords();
         sortandprint();
     }
@@ -17,8 +18,7 @@ public class WordCount{
         return filename;
     }
     
-    public static String filename;
-    public static void readfile(){
+    public static void readfile(String filename){
         try{
             File file = new File(filename);
             Scanner input = new Scanner(file);
