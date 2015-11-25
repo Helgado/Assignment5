@@ -1,4 +1,4 @@
-package Wordcount;
+package Question1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ public class WordCount{
         addwords();
         sortandprint();
     }
-    //This should take the filename 
+    
     public static String getfile(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Filename: ");
