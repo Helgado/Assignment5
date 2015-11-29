@@ -1,5 +1,3 @@
-package Question1;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -7,10 +5,10 @@ public class WordCount{
     public static void main(String[] args){
         String filename = getfile();
         int c = countfile(filename);
-        System.out.println(c);
         Word[] unfiltered = readfile(filename, c);
-        filterwords(unfiltered);
-        printwords();
+        Word[] filtered = addwords(unfiltered);
+        Word[] sorted = sortwords(filtered);
+        printwords(sorted);
     }
     
     public static String getfile(){
@@ -21,7 +19,6 @@ public class WordCount{
         return filename;
     }
     
-    @SuppressWarnings("finally")
 	public static int countfile(String filename){
     	int counter = 0;
     	try{
@@ -31,9 +28,12 @@ public class WordCount{
     		String lel = input.next();
     		counter++;
     	}
-    	} finally{
-    	return counter;
+    	input.close();
     	}
+    	catch (FileNotFoundException e) {
+    	      System.out.println(e.getMessage());
+    	    }
+    	return counter;
     }
     
     public static Word[] readfile(String filename, int c){
@@ -43,26 +43,44 @@ public class WordCount{
         	Scanner input = new Scanner(file);
         	while (input.hasNext()) {
         		for (int i = 0; i < c; i++){
-        			array[i].wordstring = input.next();
+        			String nopunct = input.next();
+        			array[i] = new Word(1, nopunct.replaceAll("[\\W]", ""));
         		}
         	}
-        	} finally{
-        	return array;
+        	input.close();
         	}
+    	catch (FileNotFoundException e) {
+    	      System.out.println(e.getMessage());
+    	    }
+        	return array;
         }
      
     
-    public static void filterwords(Word[] array){
-    	for (int i = 0; i < array.length; i++){
-            for (int j = i; j > 0; j--){
-                if (array[i] == array[j-1]){
-                    array[j-1].frequency++
+    public static Word[] addwords(Word[] array){
+    	for (int i = 1; i < array.length; i++){
+            for (int j = 0; j <= i; j++){
+                if (array[i].wordstring.equalsIgnoreCase(array[j].wordstring)){
+                    array[j].frequency++;
                     break;
+                }
+                
             }
         }
+    	System.out.println(array[0].wordstring + " " + array[0].frequency);
+    	return array;
     }
     
-    public static void printwords(){
+    public static Word[] sortwords(Word[] array){
+    	Arrays.sort(array);
+    	return array;
+    }
+    
+    public static void printwords(Word[] array){
+    	System.out.println("Most Frequent Words:");
+    	System.out.println("Word          Frequency");
+    	for (int i = 0; i < array.length; i++){
+    		System.out.println(array[i].wordstring + "          " + array[i].frequency);
+    	}
     }
   
 }
