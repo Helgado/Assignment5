@@ -1,3 +1,5 @@
+package pack;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -66,20 +68,39 @@ public class WordCount{
                 
             }
         }
-    	System.out.println(array[0].wordstring + " " + array[0].frequency);
     	return array;
     }
     
     public static Word[] sortwords(Word[] array){
-    	Arrays.sort(array);
+    	for (int i = 0; i < array.length; i++){
+    		int minIndex = i;
+    		int min = Integer.MAX_VALUE;
+    		for (int j = i; j < array.length; j++){
+    			if(array[j].frequency < min){
+    				min = array[j].frequency;
+    				minIndex = j;
+    			}
+    		}
+    		array = swap(array, i, minIndex);
+    	}
     	return array;
     }
+
+    public static Word[] swap(Word[] array, int i, int minIndex){
+    	Word tmp = array[i];
+    	array[i] = array[minIndex];
+    	array[minIndex] = tmp;
+    	return array;
+    }
+
     
     public static void printwords(Word[] array){
     	System.out.println("Most Frequent Words:");
     	System.out.println("Word          Frequency");
-    	for (int i = 0; i < array.length; i++){
-    		System.out.println(array[i].wordstring + "          " + array[i].frequency);
+    	int top = (array.length - 1);
+    	for (int i = 0; i < 5; i++){
+    		System.out.println(array[top].wordstring + "          " + array[top].frequency);
+    		top--;
     	}
     }
   
