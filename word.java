@@ -8,5 +8,6 @@ public class Word{
     public Word(int frequency, String wordstring){
     	this.frequency = frequency;
     	this.wordstring = wordstring;
+    //the constructor
     }
 }
