@@ -12,6 +12,7 @@ public class WordCount{
         Word[] sorted = sortwords(filtered);
         printwords(sorted);
     }
+    //This is the main method it is just like a table of contents for the program
     
     public static String getfile(){
         Scanner input = new Scanner(System.in);
@@ -20,6 +21,8 @@ public class WordCount{
         input.close();
         return filename;
     }
+    //This method just uses a scanner to take the filename, and then returns
+    //it to the main method
     
 	public static int countfile(String filename){
     	int counter = 0;
@@ -37,6 +40,8 @@ public class WordCount{
     	    }
     	return counter;
     }
+	//This method counts the number of words in the file and then
+	//returns the number to the main method
     
     public static Word[] readfile(String filename, int c){
     	Word[] array = new Word[c];
@@ -46,7 +51,7 @@ public class WordCount{
         	while (input.hasNext()) {
         		for (int i = 0; i < c; i++){
         			String nopunct = input.next();
-        			array[i] = new Word(1, nopunct.replaceAll("[\\W]", ""));
+        			array[i] = new Word(0, nopunct.replaceAll("[\\W]", ""));
         		}
         	}
         	input.close();
@@ -56,11 +61,13 @@ public class WordCount{
     	    }
         	return array;
         }
+    //This method uses the number of words in the file to make an
+    //array of Word objects using the file.
      
     
     public static Word[] addwords(Word[] array){
     	for (int i = 1; i < array.length; i++){
-            for (int j = 0; j <= i; j++){
+            for (int j = 0; j < i; j++){
                 if (array[i].wordstring.equalsIgnoreCase(array[j].wordstring)){
                     array[j].frequency++;
                     break;
@@ -70,6 +77,8 @@ public class WordCount{
         }
     	return array;
     }
+    //This method takes the array of words and modifies the frequency
+    //based on how many times it counts the word
     
     public static Word[] sortwords(Word[] array){
     	for (int i = 0; i < array.length; i++){
@@ -85,6 +94,7 @@ public class WordCount{
     	}
     	return array;
     }
+    
 
     public static Word[] swap(Word[] array, int i, int minIndex){
     	Word tmp = array[i];
@@ -92,6 +102,8 @@ public class WordCount{
     	array[minIndex] = tmp;
     	return array;
     }
+    //These two methods sort the words so they're ordered by
+    //frequency and then can be easily displayed in the correct order
 
     
     public static void printwords(Word[] array){
@@ -103,5 +115,6 @@ public class WordCount{
     		top--;
     	}
     }
+    //This method prints out the words and their frequency
   
 }
